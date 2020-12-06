@@ -9,16 +9,11 @@ function convert(input){
     for(let j = 0; j< input[i].length; j++){
       obj[input[i][j]] = (obj[input[i][j]] || 0 ) + 1;
     }
-    // console.log(input[i])
-    
-    // console.log(obj)
     convertedArr.push(obj)
-
   }
 }
 
 convert(input);
-// console.log(convertedArr)
 
 function countInputGroups(input){
   let obj = {};
@@ -35,7 +30,7 @@ function countInputGroups(input){
   console.log(count)
 }
 
-// countInputGroups(convertedArr)
+countInputGroups(convertedArr)
 
 
 function brian(input) {
@@ -46,7 +41,6 @@ function brian(input) {
     for (let key in obj) {
       if (obj[key] !== length) delete obj[key]
     }
-    // console.log(obj)
   }
   countInputGroups(input);
 } 

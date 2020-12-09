@@ -19,36 +19,43 @@ function convert(input){
   }
   findEdgeCases(convertedObj2)
 }
-
-convert(input);
-
 function findEdgeCases(obj){
   for (let key in obj){
     switch (key){
-      case 'dull indigo': obj[key] = 0;
+      case 'dull indigo': obj[key] = 1;
       break;
-      case 'drab white': obj[key] = 0;
+      case 'drab white': obj[key] = 1;
       break;
-      case 'light chartreuse': obj[key] = 0;
+      case 'light chartreuse': obj[key] = 1;
       break;
-      case 'muted gold': obj[key] = 0;
+      case 'muted gold': obj[key] = 1;
       break;
-      case 'clear brown': obj[key] = 0;
+      case 'clear brown': obj[key] = 1;
       break;
-      case 'vibrant crimson': obj[key] = 0;
+      case 'vibrant crimson': obj[key] = 1;
       break;
-      case 'wavy tan': obj[key] = 0;
+      case 'wavy tan': obj[key] = 1;
       break;
-      case 'shiny brown': obj[key] = 0;
+      case 'shiny brown': obj[key] = 1;
       break;
-      case 'bright magenta': obj[key] = 0;
+      case 'bright magenta': obj[key] = 1;
       break;
-      case 'faded chartreuse': obj[key] = 0;
+      case 'faded chartreuse': obj[key] = 1;
       break;
     }
     // if (obj[key] === 0) console.log("shut up faggot")
   }
 }
+function marsLittleFunction (string) {
+  if (string.includes('bags.')) string=string.slice(0,string.length-6)
+  if (string.includes('bags')) string=string.slice(0,string.length-5)
+  if (string.includes('bag.')) string=string.slice(0,string.length-5)
+  if (string.includes('bag')) string=string.slice(0,string.length-4)
+  // console.log(string, string.length)
+  return string
+}
+
+convert(input);
 
 
 function marSolution(input){
@@ -56,7 +63,6 @@ function marSolution(input){
   for (let key in input) {
     if (input[key].includes('shiny gold')) arr.push(key)
   }
-
   function helper(arrOfColors){
     let newArr = [];
     for (let i=0; i < arrOfColors.length; i++) {
@@ -69,75 +75,38 @@ function marSolution(input){
     return helper(newArr);
   }
   helper(arr);
-  allColors = ([... new Set(arr.flat())])
-
+  return allColors = ([... new Set(arr.flat())])
 }
-
-
-
 marSolution(convertedObj);
 
-
-function marIsTheBest(obj) {
-  let total = [];
-  let num = 0;
-  // console.log(obj['light chartreuse'])
-  function helper(objKey){
-    if (objKey === 0) return 1;
-    for (let key in obj[objKey]){
-      num = parseInt(obj[objKey][key])
-      num += num * helper(key)
-      total.push(num)
-    }
-  }
-  helper('shiny gold');
-}
-// console.log(convertedObj2)
-
-marIsTheBest(convertedObj2)
-
-
-function marsLittleFunction (string) {
-  if (string.includes('bags.')) string=string.slice(0,string.length-6)
-  if (string.includes('bags')) string=string.slice(0,string.length-5)
-  if (string.includes('bag.')) string=string.slice(0,string.length-5)
-  if (string.includes('bag')) string=string.slice(0,string.length-4)
-  // console.log(string, string.length)
-  return string
-}
 
 function marsWay(obj){
   let arr = [];
   for (let key in obj) {
-    if (obj[key] === 0) arr.push(key)
+    if (obj[key] === 1) arr.push(key)
   }
-  for(let j=0; j < arr.length;j++) {
+
+  while(arr.length > 0) {
     for (let k in obj) {
       for (let key in obj[k]) {
-        if (key === arr[j]) {
-          obj[k][key] = 1 * parseInt(obj[k][key]) ;
+        if (key === arr[0]) {
+          obj[k][key] = (obj[arr[0]] * parseInt(obj[k][key]));
         }
-        let vals;
         if (typeof obj[k] === 'object') {
-          vals = Object.values(obj[k]);
-          let condition = true;
-          for (let b = 0; b < vals.length; b++){
-            if (typeof vals[b] !== "number") condition = false;
-          }
-          if(condition){
+          let vals = Object.values(obj[k]);
+          let res = vals.every(element => typeof element === 'number');
+          if (res){
             vals = vals.reduce((a,b) => a + b)
-            // console.log(vals)
-            obj[k] = vals;
-            console.log(k, obj[k])
+            arr.push(k);
+            obj[k] = vals + 1;
           }
         }
       }
-      console.log(obj)
     }
-    // console.log(obj)
+    arr.splice(0, 1)
   }
-
-
+  console.log(obj)
+  console.log((5 * obj['clear crimson']) + (obj['drab white']) + (2 * obj['wavy purple']) + (2 * obj['muted gray']))
 }
 
 marsWay(convertedObj2)
